@@ -331,7 +331,7 @@ if($stage == 'register'){ //
 
     $uid = base64_encode($sysdateu);
     $strSQL = "INSERT INTO dj3x_account (uid, username, password, role_id, register_datetime)
-             VALUES ('$uid', '$username', '$password', '4', '$province', '$district', '$subdistrict', '$sysdatetime')
+             VALUES ('$uid', '$username', '$password', '4', '$sysdatetime')
             ";
     $query = mysqli_query($conn, $strSQL);
     if($query){
@@ -345,7 +345,6 @@ if($stage == 'register'){ //
         $buffer['status'] = "Y";
         $buffer['uid'] = $uid;
         $buffer['role'] = '4';
-        $buffer['primary_province'] = $province;
         $return[] = $buffer;
     }else{
         $buffer = array();
