@@ -65,34 +65,8 @@ if($stage == 'current_user'){ //
   $uid = mysqli_real_escape_string($conn, $_POST['uid']);
   $return = array();
 
-  $strSQL = "SELECT * FROM dj3x_account a INNER JOIN dj3x_userinfo b ON a.uid = b.uid WHERE a.uid = '$uid' AND b.info_status = 'Y' AND a.delete_status = 'N' AND a.allow_status = 'Y' LIMIT 1";
-  $query = mysqli_query($conn, $strSQL);
-
-  if(($query) && (mysqli_num_rows($query) > 0)){
-    while($row = mysqli_fetch_array($query)){
-      $username_tmp = $row['username'];
-      $b = explode('@', $username_tmp);
-      if(sizeof($b) > 1){
-        // Is email
-        if($row['primary_email'] == null){
-          $strSQL = "UPDATE dj3x_userinfo SET primary_email = '$username_tmp' WHERE uid = '$uid'";
-          $resultUpdate = mysqli_query($conn, $strSQL);
-        }
-      }else{
-        // Is phone
-        if($row['primary_phone'] == null){
-          $strSQL = "UPDATE dj3x_userinfo SET primary_phone = '$username_tmp' WHERE uid = '$uid'";
-          $resultUpdate = mysqli_query($conn, $strSQL);
-        }
-      }
-    }
-  }
-
-  $strSQL = "SELECT *, c.Name province, d.Name district, e.Name subdistrict
+  $strSQL = "SELECT *
              FROM dj3x_account a INNER JOIN dj3x_userinfo b ON a.uid = b.uid
-             LEFT JOIN repos_changwat c ON a.primary_province = c.Changwat
-             LEFT JOIN repos_ampur d ON a.primary_province = d.Changwat AND a.primary_district = d.Ampur
-             LEFT JOIN repos_tumbon e ON a.primary_province = e.Changwat AND a.primary_district = e.Ampur AND a.primary_subdistrict = e.Tumbon
              WHERE a.uid = '$uid' AND b.info_status = 'Y' AND a.delete_status = 'N' AND a.allow_status = 'Y' LIMIT 1";
   $query = mysqli_query($conn, $strSQL);
 
